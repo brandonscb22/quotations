@@ -33,7 +33,7 @@ class QuotationsController < ApplicationController
         Giro_a_recibir: ActionController::Base.helpers.number_to_currency(@Giro_a_recibir, precision: 0),
         Excedentes: ActionController::Base.helpers.number_to_currency(@Excedentes, precision: 0),
       }
-    rescue =>
+    rescue
       render json: {
         message: 'Failed'
       }
