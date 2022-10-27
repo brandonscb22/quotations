@@ -1,11 +1,17 @@
 class QuotationsController < ApplicationController
   def index
     begin
+      # Document amount in integer
       @document_amount = Integer(params['Monto_de_la_factura'])
+      # Remove '-'
       @debtor_dni = params['Rut_Deudor'].sub("-", "")
+      # Expiration date object Date
       @expiration_date = Date.strptime(params['Fecha_de_vencimiento_de_la_factura'], "%Y-%m-%d")
+      # Date today
       @date_today = Date.today
+      # Days to expiration + 1 day
       @expiration_days = @expiration_date.mjd - @date_today.mjd + 1
+      # Use service to call API
       @response = SimpleQuote.new(
         client_dni: params['Rut_Emisor'],
         debtor_dni: @debtor_dni,
@@ -13,6 +19,7 @@ class QuotationsController < ApplicationController
         folio: params['Folio'],
         expiration_date: params['Fecha_de_vencimiento_de_la_factura']
       ).send
+      # Case data test
       if params.key?("test") && params['test']
         @document_rate = 1.9
         @commission = 23990.0
