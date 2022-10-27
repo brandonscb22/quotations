@@ -6,7 +6,6 @@ class QuotationsController < ApplicationController
       @expiration_date = Date.strptime(params['Fecha_de_vencimiento_de_la_factura'], "%Y-%m-%d")
       @date_today = Date.today
       @expiration_days = @expiration_date.mjd - @date_today.mjd + 1
-      puts @expiration_days
       @response = SimpleQuote.new(
         client_dni: params['Rut_Emisor'],
         debtor_dni: @debtor_dni,
